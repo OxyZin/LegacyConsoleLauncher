@@ -15,7 +15,7 @@ This tool makes it easier to start the game with arguments, select the game fold
 
 You can download the latest version from the Releases page.
 
-https://github.com/SEUUSER/LegacyConsoleLauncher/releases
+https://github.com/OxyZin/LegacyConsoleLauncher/releases
 
 ## Features
 
