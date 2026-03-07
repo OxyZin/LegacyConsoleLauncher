@@ -44,7 +44,7 @@ https://github.com/OxyZin/LegacyConsoleLauncher/releases
    Minecraft.Client.exe
    ```
 
-5. Click **Launch!**
+5. Click **Launch game**
 
 You can also **drag and drop** the game folder or `Minecraft.Client.exe` directly onto the launcher.
 
