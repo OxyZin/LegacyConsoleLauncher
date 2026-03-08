@@ -22,111 +22,171 @@
 
         #region Código gerado pelo Windows Form Designer
 
-        /// <summary>
-        /// Método necessário para suporte ao Designer - não modifique 
-        /// o conteúdo deste método com o editor de código.
-        /// </summary>
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.button2 = new System.Windows.Forms.Button();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.logo = new System.Windows.Forms.PictureBox();
-            this.button3 = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.logo)).BeginInit();
+            this.launchButton = new System.Windows.Forms.Button();
+            this.fullscreenCheckBox = new System.Windows.Forms.CheckBox();
+            this.usernameComboBox = new System.Windows.Forms.ComboBox();
+            this.usernameLabel = new System.Windows.Forms.Label();
+            this.logoPictureBox = new System.Windows.Forms.PictureBox();
+            this.setFolderButton = new System.Windows.Forms.Button();
+            this.gamePathLabel = new System.Windows.Forms.Label();
+            this.gamePathTextBox = new System.Windows.Forms.TextBox();
+            this.openFolderButton = new System.Windows.Forms.Button();
+            this.resetLink = new System.Windows.Forms.LinkLabel();
+            this.playtimeLabel = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
-            // button2
+            // launchButton
             // 
-            this.button2.Location = new System.Drawing.Point(134, 258);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(111, 32);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Launch Game";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.launchButton.Location = new System.Drawing.Point(246, 224);
+            this.launchButton.Name = "launchButton";
+            this.launchButton.Size = new System.Drawing.Size(111, 32);
+            this.launchButton.TabIndex = 1;
+            this.launchButton.Text = "Launch Game";
+            this.launchButton.UseVisualStyleBackColor = true;
+            this.launchButton.Click += new System.EventHandler(this.launchButton_Click);
             // 
-            // checkBox1
+            // fullscreenCheckBox
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(12, 144);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(74, 17);
-            this.checkBox1.TabIndex = 2;
-            this.checkBox1.Text = "Fullscreen";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            this.fullscreenCheckBox.AutoSize = true;
+            this.fullscreenCheckBox.Location = new System.Drawing.Point(251, 120);
+            this.fullscreenCheckBox.Name = "fullscreenCheckBox";
+            this.fullscreenCheckBox.Size = new System.Drawing.Size(74, 17);
+            this.fullscreenCheckBox.TabIndex = 2;
+            this.fullscreenCheckBox.Text = "Fullscreen";
+            this.fullscreenCheckBox.UseVisualStyleBackColor = true;
+            this.fullscreenCheckBox.CheckedChanged += new System.EventHandler(this.fullscreenCheckBox_CheckedChanged);
             // 
-            // textBox1
+            // usernameComboBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(12, 118);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(233, 20);
-            this.textBox1.TabIndex = 3;
+            this.usernameComboBox.FormattingEnabled = true;
+            this.usernameComboBox.Location = new System.Drawing.Point(12, 117);
+            this.usernameComboBox.Name = "usernameComboBox";
+            this.usernameComboBox.Size = new System.Drawing.Size(233, 21);
+            this.usernameComboBox.TabIndex = 3;
+            this.usernameComboBox.SelectedIndexChanged += new System.EventHandler(this.usernameComboBox_SelectedIndexChanged);
             // 
-            // label1
+            // usernameLabel
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 102);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(55, 13);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "Username";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
+            this.usernameLabel.AutoSize = true;
+            this.usernameLabel.Location = new System.Drawing.Point(9, 102);
+            this.usernameLabel.Name = "usernameLabel";
+            this.usernameLabel.Size = new System.Drawing.Size(55, 13);
+            this.usernameLabel.TabIndex = 4;
+            this.usernameLabel.Text = "Username";
+            this.usernameLabel.Click += new System.EventHandler(this.usernameLabel_Click);
             // 
-            // logo
+            // logoPictureBox
             // 
-            this.logo.Image = ((System.Drawing.Image)(resources.GetObject("logo.Image")));
-            this.logo.Location = new System.Drawing.Point(12, 12);
-            this.logo.Name = "logo";
-            this.logo.Size = new System.Drawing.Size(233, 87);
-            this.logo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.logo.TabIndex = 5;
-            this.logo.TabStop = false;
-            this.logo.Click += new System.EventHandler(this.pictureBox1_Click);
+            this.logoPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("logoPictureBox.Image")));
+            this.logoPictureBox.Location = new System.Drawing.Point(27, 19);
+            this.logoPictureBox.Name = "logoPictureBox";
+            this.logoPictureBox.Size = new System.Drawing.Size(309, 63);
+            this.logoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.logoPictureBox.TabIndex = 5;
+            this.logoPictureBox.TabStop = false;
+            this.logoPictureBox.Click += new System.EventHandler(this.logoPictureBox_Click);
             // 
-            // button3
+            // setFolderButton
             // 
-            this.button3.Location = new System.Drawing.Point(17, 258);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(111, 32);
-            this.button3.TabIndex = 6;
-            this.button3.Text = "Set game folder";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.setFolderButton.Location = new System.Drawing.Point(129, 224);
+            this.setFolderButton.Name = "setFolderButton";
+            this.setFolderButton.Size = new System.Drawing.Size(111, 32);
+            this.setFolderButton.TabIndex = 6;
+            this.setFolderButton.Text = "Set Game Folder";
+            this.setFolderButton.UseVisualStyleBackColor = true;
+            this.setFolderButton.Click += new System.EventHandler(this.setFolderButton_Click);
+            // 
+            // gamePathLabel
+            // 
+            this.gamePathLabel.AutoSize = true;
+            this.gamePathLabel.Location = new System.Drawing.Point(13, 156);
+            this.gamePathLabel.Name = "gamePathLabel";
+            this.gamePathLabel.Size = new System.Drawing.Size(62, 13);
+            this.gamePathLabel.TabIndex = 7;
+            this.gamePathLabel.Text = "Game path:";
+            this.gamePathLabel.Click += new System.EventHandler(this.gamePathLabel_Click);
+            // 
+            // gamePathTextBox
+            // 
+            this.gamePathTextBox.Location = new System.Drawing.Point(12, 172);
+            this.gamePathTextBox.Name = "gamePathTextBox";
+            this.gamePathTextBox.Size = new System.Drawing.Size(345, 20);
+            this.gamePathTextBox.TabIndex = 8;
+            // 
+            // openFolderButton
+            // 
+            this.openFolderButton.Location = new System.Drawing.Point(12, 224);
+            this.openFolderButton.Name = "openFolderButton";
+            this.openFolderButton.Size = new System.Drawing.Size(111, 32);
+            this.openFolderButton.TabIndex = 9;
+            this.openFolderButton.Text = "Open Folder";
+            this.openFolderButton.UseVisualStyleBackColor = true;
+            this.openFolderButton.Click += new System.EventHandler(this.openFolderButton_Click);
+            // 
+            // resetLink
+            // 
+            this.resetLink.AutoSize = true;
+            this.resetLink.Location = new System.Drawing.Point(13, 280);
+            this.resetLink.Name = "resetLink";
+            this.resetLink.Size = new System.Drawing.Size(124, 13);
+            this.resetLink.TabIndex = 10;
+            this.resetLink.TabStop = true;
+            this.resetLink.Text = "Reset Launcher Settings";
+            this.resetLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.resetLink_LinkClicked);
+            // 
+            // playtimeLabel
+            //
+            this.playtimeLabel.AutoSize = true;
+            this.playtimeLabel.Location = new System.Drawing.Point(264, 280);
+            this.playtimeLabel.Name = "playtimeLabel";
+            this.playtimeLabel.Size = new System.Drawing.Size(77, 13);
+            this.playtimeLabel.TabIndex = 11;
+            this.playtimeLabel.Text = "Playtime: 0h 0m";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(257, 302);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.logo);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.checkBox1);
-            this.Controls.Add(this.button2);
+            this.ClientSize = new System.Drawing.Size(364, 302);
+            this.Controls.Add(this.playtimeLabel);
+            this.Controls.Add(this.resetLink);
+            this.Controls.Add(this.openFolderButton);
+            this.Controls.Add(this.gamePathTextBox);
+            this.Controls.Add(this.gamePathLabel);
+            this.Controls.Add(this.setFolderButton);
+            this.Controls.Add(this.logoPictureBox);
+            this.Controls.Add(this.usernameLabel);
+            this.Controls.Add(this.usernameComboBox);
+            this.Controls.Add(this.fullscreenCheckBox);
+            this.Controls.Add(this.launchButton);
+            this.Controls.Add(this.playtimeLabel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "LegacyConsoleLauncher";
             this.Load += new System.EventHandler(this.Form1_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.logo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.PictureBox logo;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button launchButton;
+        private System.Windows.Forms.CheckBox fullscreenCheckBox;
+        private System.Windows.Forms.ComboBox usernameComboBox;
+        private System.Windows.Forms.Label usernameLabel;
+        private System.Windows.Forms.PictureBox logoPictureBox;
+        private System.Windows.Forms.Button setFolderButton;
+        private System.Windows.Forms.Label gamePathLabel;
+        private System.Windows.Forms.TextBox gamePathTextBox;
+        private System.Windows.Forms.Button openFolderButton;
+        private System.Windows.Forms.LinkLabel resetLink;
+        private System.Windows.Forms.Label playtimeLabel;
     }
 }
-

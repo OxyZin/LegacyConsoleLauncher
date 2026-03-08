@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
@@ -7,9 +8,13 @@ namespace LegacyConsoleLauncher
 {
     public partial class Form1 : Form
     {
-        string usernameFile = Path.Combine(Application.StartupPath, "username.txt");
-        string gamePathFile = Path.Combine(Application.StartupPath, "gamepath.txt");
-        string exePath = Path.Combine(Application.StartupPath, "Minecraft.Client.exe");
+        private string accountsFile = Path.Combine(Application.StartupPath, "accounts.txt");
+        private string gamePathFile = Path.Combine(Application.StartupPath, "gamepath.txt");
+        private string exePath = Path.Combine(Application.StartupPath, "Minecraft.Client.exe");
+
+        private Dictionary<string, int> playtimeData = new Dictionary<string, int>();
+        private DateTime sessionStart;
+        private Process gameProcess;
 
         public Form1()
         {
@@ -18,16 +23,18 @@ namespace LegacyConsoleLauncher
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            button2.Text = "Launch!";
-            button3.Text = "Set Game Folder";
+            openFolderButton.Text = "Open Folder";
+            launchButton.Text = "Launch Game";
+            setFolderButton.Text = "Set Game Folder";
 
-            checkBox1.Text = "Fullscreen";
-            label1.Text = "Username:";
+            fullscreenCheckBox.Text = "Fullscreen";
+            usernameLabel.Text = "Username:";
+            gamePathLabel.Text = "Game path:";
 
-            if (File.Exists(usernameFile))
-            {
-                textBox1.Text = File.ReadAllText(usernameFile).Trim();
-            }
+            gamePathTextBox.ReadOnly = true;
+            this.AcceptButton = launchButton;
+
+            LoadAccounts();
 
             if (File.Exists(gamePathFile))
             {
@@ -39,12 +46,184 @@ namespace LegacyConsoleLauncher
                 }
             }
 
+            AutoDetectGame();
+            UpdateGamePathDisplay();
+            UpdatePlaytimeLabel();
+
             this.AllowDrop = true;
             this.DragEnter += Form1_DragEnter;
             this.DragDrop += Form1_DragDrop;
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void LoadAccounts()
+        {
+            usernameComboBox.Items.Clear();
+            playtimeData.Clear();
+
+            if (!File.Exists(accountsFile))
+            {
+                return;
+            }
+
+            string[] lines = File.ReadAllLines(accountsFile);
+
+            foreach (string line in lines)
+            {
+                if (string.IsNullOrWhiteSpace(line))
+                {
+                    continue;
+                }
+
+                string[] parts = line.Split('|');
+
+                string username = parts[0].Trim();
+
+                if (string.IsNullOrWhiteSpace(username))
+                {
+                    continue;
+                }
+
+                int seconds = 0;
+
+                if (parts.Length > 1)
+                {
+                    int.TryParse(parts[1], out seconds);
+                }
+
+                if (!playtimeData.ContainsKey(username))
+                {
+                    playtimeData[username] = seconds;
+                    usernameComboBox.Items.Add(username);
+                }
+            }
+
+            if (usernameComboBox.Items.Count > 0)
+            {
+                usernameComboBox.SelectedIndex = 0;
+            }
+        }
+
+        private void SaveAccounts()
+        {
+            List<string> lines = new List<string>();
+
+            foreach (var entry in playtimeData)
+            {
+                lines.Add(entry.Key + "|" + entry.Value);
+            }
+
+            File.WriteAllLines(accountsFile, lines);
+        }
+
+        private void AddAccount(string username)
+        {
+            if (string.IsNullOrWhiteSpace(username))
+            {
+                return;
+            }
+
+            if (!playtimeData.ContainsKey(username))
+            {
+                playtimeData[username] = 0;
+                usernameComboBox.Items.Add(username);
+            }
+
+            usernameComboBox.SelectedItem = username;
+            SaveAccounts();
+        }
+
+        private void AutoDetectGame()
+        {
+            if (File.Exists(exePath))
+            {
+                return;
+            }
+
+            string[] possiblePaths =
+            {
+                Path.Combine(Application.StartupPath, "Minecraft.Client.exe"),
+                Path.Combine(Application.StartupPath, "build", "Minecraft.Client.exe"),
+                Path.Combine(Application.StartupPath, "bin", "Minecraft.Client.exe"),
+                Path.Combine(Application.StartupPath, "game", "Minecraft.Client.exe")
+            };
+
+            foreach (string path in possiblePaths)
+            {
+                if (File.Exists(path))
+                {
+                    exePath = path;
+                    File.WriteAllText(gamePathFile, exePath);
+                    break;
+                }
+            }
+        }
+
+        private void UpdateGamePathDisplay()
+        {
+            if (File.Exists(exePath))
+            {
+                gamePathTextBox.Text = exePath;
+            }
+            else
+            {
+                gamePathTextBox.Text = "Not set";
+            }
+
+            bool gameFound = File.Exists(exePath);
+
+            openFolderButton.Enabled = gameFound;
+            launchButton.Enabled = gameFound;
+        }
+
+        private void SetGamePath(string newPath)
+        {
+            exePath = newPath;
+            File.WriteAllText(gamePathFile, exePath);
+            UpdateGamePathDisplay();
+        }
+
+        private string FormatPlaytime(int totalSeconds)
+        {
+            TimeSpan time = TimeSpan.FromSeconds(totalSeconds);
+            return ((int)time.TotalHours).ToString() + "h " + time.Minutes.ToString() + "m";
+        }
+
+        private void UpdatePlaytimeLabel()
+        {
+            string username = usernameComboBox.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(username))
+            {
+                playtimeLabel.Text = "Playtime: 0h 0m";
+                return;
+            }
+
+            if (!playtimeData.ContainsKey(username))
+            {
+                playtimeData[username] = 0;
+            }
+
+            playtimeLabel.Text = "Playtime: " + FormatPlaytime(playtimeData[username]);
+        }
+
+        private void openFolderButton_Click(object sender, EventArgs e)
+        {
+            if (!File.Exists(exePath))
+            {
+                MessageBox.Show(
+                    "Minecraft.Client.exe was not found.",
+                    "Game Not Found",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                return;
+            }
+
+            string gameFolder = Path.GetDirectoryName(exePath);
+            Process.Start("explorer.exe", gameFolder);
+        }
+
+        private void launchButton_Click(object sender, EventArgs e)
         {
             if (!File.Exists(exePath))
             {
@@ -57,22 +236,24 @@ namespace LegacyConsoleLauncher
                 return;
             }
 
-            File.WriteAllText(usernameFile, textBox1.Text.Trim());
+            string username = usernameComboBox.Text.Trim();
+
+            AddAccount(username);
             File.WriteAllText(gamePathFile, exePath);
 
             string args = "";
 
-            if (!string.IsNullOrWhiteSpace(textBox1.Text))
+            if (!string.IsNullOrWhiteSpace(username))
             {
-                args += "-name \"" + textBox1.Text.Trim() + "\" ";
+                args += "-name \"" + username + "\" ";
             }
 
-            if (checkBox1.Checked)
+            if (fullscreenCheckBox.Checked)
             {
                 args += "-fullscreen";
             }
 
-            Process.Start(new ProcessStartInfo
+            gameProcess = Process.Start(new ProcessStartInfo
             {
                 FileName = exePath,
                 Arguments = args.Trim(),
@@ -80,10 +261,49 @@ namespace LegacyConsoleLauncher
                 UseShellExecute = true
             });
 
-            this.Close();
+            if (gameProcess == null)
+            {
+                MessageBox.Show(
+                    "Failed to start the game.",
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+                return;
+            }
+
+            sessionStart = DateTime.Now;
+
+            gameProcess.EnableRaisingEvents = true;
+            gameProcess.Exited += GameProcess_Exited;
+
+            this.Hide();
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void GameProcess_Exited(object sender, EventArgs e)
+        {
+            int sessionSeconds = (int)(DateTime.Now - sessionStart).TotalSeconds;
+
+            this.Invoke((MethodInvoker)delegate
+            {
+                string username = usernameComboBox.Text.Trim();
+
+                if (!string.IsNullOrWhiteSpace(username))
+                {
+                    if (!playtimeData.ContainsKey(username))
+                    {
+                        playtimeData[username] = 0;
+                    }
+
+                    playtimeData[username] += sessionSeconds;
+                    SaveAccounts();
+                }
+
+                Application.Exit();
+            });
+        }
+
+        private void setFolderButton_Click(object sender, EventArgs e)
         {
             using (FolderBrowserDialog dialog = new FolderBrowserDialog())
             {
@@ -96,8 +316,7 @@ namespace LegacyConsoleLauncher
 
                     if (File.Exists(possibleExe))
                     {
-                        exePath = possibleExe;
-                        File.WriteAllText(gamePathFile, exePath);
+                        SetGamePath(possibleExe);
 
                         MessageBox.Show(
                             "Game folder set successfully.",
@@ -175,8 +394,7 @@ namespace LegacyConsoleLauncher
             {
                 if (Path.GetFileName(droppedPath).Equals("Minecraft.Client.exe", StringComparison.OrdinalIgnoreCase))
                 {
-                    exePath = droppedPath;
-                    File.WriteAllText(gamePathFile, exePath);
+                    SetGamePath(droppedPath);
 
                     MessageBox.Show(
                         "Minecraft.Client.exe loaded successfully.",
@@ -194,8 +412,7 @@ namespace LegacyConsoleLauncher
 
                 if (File.Exists(possibleExe))
                 {
-                    exePath = possibleExe;
-                    File.WriteAllText(gamePathFile, exePath);
+                    SetGamePath(possibleExe);
 
                     MessageBox.Show(
                         "Game folder loaded successfully.",
@@ -215,15 +432,67 @@ namespace LegacyConsoleLauncher
             );
         }
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        private void resetLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            DialogResult result = MessageBox.Show(
+                "This will reset the saved accounts and game path. Continue?",
+                "Reset Launcher Settings",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question
+            );
+
+            if (result != DialogResult.Yes)
+            {
+                return;
+            }
+
+            if (File.Exists(accountsFile))
+            {
+                File.Delete(accountsFile);
+            }
+
+            if (File.Exists(gamePathFile))
+            {
+                File.Delete(gamePathFile);
+            }
+
+            usernameComboBox.Items.Clear();
+            usernameComboBox.Text = "";
+            playtimeData.Clear();
+
+            exePath = Path.Combine(Application.StartupPath, "Minecraft.Client.exe");
+            fullscreenCheckBox.Checked = false;
+
+            AutoDetectGame();
+            UpdateGamePathDisplay();
+            UpdatePlaytimeLabel();
+
+            MessageBox.Show(
+                "Launcher settings have been reset.",
+                "Done",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information
+            );
+        }
+
+        private void usernameComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdatePlaytimeLabel();
+        }
+
+        private void fullscreenCheckBox_CheckedChanged(object sender, EventArgs e)
         {
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void usernameLabel_Click(object sender, EventArgs e)
         {
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
+        private void logoPictureBox_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void gamePathLabel_Click(object sender, EventArgs e)
         {
         }
     }
