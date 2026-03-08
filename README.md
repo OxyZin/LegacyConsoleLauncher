@@ -9,7 +9,7 @@ A lightweight launcher for the **Minecraft Legacy Console PC Port**.
 It provides a simple way to launch the game, manage accounts and track playtime without needing to use the command line.
 
 <p align="center">
-<img width="366" height="334" alt="Launcher Screenshot" src="https://github.com/user-attachments/assets/9ade833e-a36d-492b-909c-436b11ceb8b8" />
+<img width="366" height="334" alt="image" src="https://github.com/user-attachments/assets/97cd7261-6e35-43c1-9d97-a4ba2a0fc026" />
 </p>
 
 ---
