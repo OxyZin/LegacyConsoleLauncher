@@ -52,7 +52,7 @@
             // fullscreenCheckBox
             // 
             this.fullscreenCheckBox.AutoSize = true;
-            this.fullscreenCheckBox.Location = new System.Drawing.Point(251, 120);
+            this.fullscreenCheckBox.Location = new System.Drawing.Point(291, 119);
             this.fullscreenCheckBox.Name = "fullscreenCheckBox";
             this.fullscreenCheckBox.Size = new System.Drawing.Size(74, 17);
             this.fullscreenCheckBox.TabIndex = 2;
@@ -65,7 +65,7 @@
             this.usernameComboBox.FormattingEnabled = true;
             this.usernameComboBox.Location = new System.Drawing.Point(12, 117);
             this.usernameComboBox.Name = "usernameComboBox";
-            this.usernameComboBox.Size = new System.Drawing.Size(233, 21);
+            this.usernameComboBox.Size = new System.Drawing.Size(274, 21);
             this.usernameComboBox.TabIndex = 3;
             this.usernameComboBox.SelectedIndexChanged += new System.EventHandler(this.usernameComboBox_SelectedIndexChanged);
             // 
@@ -139,11 +139,11 @@
             this.resetLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.resetLink_LinkClicked);
             // 
             // playtimeLabel
-            //
+            // 
             this.playtimeLabel.AutoSize = true;
             this.playtimeLabel.Location = new System.Drawing.Point(264, 280);
             this.playtimeLabel.Name = "playtimeLabel";
-            this.playtimeLabel.Size = new System.Drawing.Size(77, 13);
+            this.playtimeLabel.Size = new System.Drawing.Size(81, 13);
             this.playtimeLabel.TabIndex = 11;
             this.playtimeLabel.Text = "Playtime: 0h 0m";
             // 
@@ -152,7 +152,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(364, 302);
-            this.Controls.Add(this.playtimeLabel);
             this.Controls.Add(this.resetLink);
             this.Controls.Add(this.openFolderButton);
             this.Controls.Add(this.gamePathTextBox);

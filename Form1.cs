@@ -48,6 +48,7 @@ namespace LegacyConsoleLauncher
 
             AutoDetectGame();
             UpdateGamePathDisplay();
+            LoadFullscreenSetting();
             UpdatePlaytimeLabel();
 
             this.AllowDrop = true;
@@ -75,7 +76,6 @@ namespace LegacyConsoleLauncher
                 }
 
                 string[] parts = line.Split('|');
-
                 string username = parts[0].Trim();
 
                 if (string.IsNullOrWhiteSpace(username))
@@ -180,6 +180,7 @@ namespace LegacyConsoleLauncher
             exePath = newPath;
             File.WriteAllText(gamePathFile, exePath);
             UpdateGamePathDisplay();
+            LoadFullscreenSetting();
         }
 
         private string FormatPlaytime(int totalSeconds)
@@ -204,6 +205,72 @@ namespace LegacyConsoleLauncher
             }
 
             playtimeLabel.Text = "Playtime: " + FormatPlaytime(playtimeData[username]);
+        }
+
+        private void LoadFullscreenSetting()
+        {
+            if (!File.Exists(exePath))
+            {
+                return;
+            }
+
+            string gameFolder = Path.GetDirectoryName(exePath);
+            string optionsPath = Path.Combine(gameFolder, "options.txt");
+
+            if (!File.Exists(optionsPath))
+            {
+                return;
+            }
+
+            string[] lines = File.ReadAllLines(optionsPath);
+
+            foreach (string line in lines)
+            {
+                if (line.StartsWith("fullscreen="))
+                {
+                    fullscreenCheckBox.Checked = line.Trim() == "fullscreen=1";
+                    break;
+                }
+            }
+        }
+
+        private void SaveFullscreenSetting()
+        {
+            if (!File.Exists(exePath))
+            {
+                return;
+            }
+
+            string gameFolder = Path.GetDirectoryName(exePath);
+            string optionsPath = Path.Combine(gameFolder, "options.txt");
+
+            if (!File.Exists(optionsPath))
+            {
+                return;
+            }
+
+            string[] lines = File.ReadAllLines(optionsPath);
+            bool foundFullscreen = false;
+
+            for (int i = 0; i < lines.Length; i++)
+            {
+                if (lines[i].StartsWith("fullscreen="))
+                {
+                    lines[i] = "fullscreen=" + (fullscreenCheckBox.Checked ? "1" : "0");
+                    foundFullscreen = true;
+                    break;
+                }
+            }
+
+            if (!foundFullscreen)
+            {
+                List<string> updatedLines = new List<string>(lines);
+                updatedLines.Add("fullscreen=" + (fullscreenCheckBox.Checked ? "1" : "0"));
+                File.WriteAllLines(optionsPath, updatedLines.ToArray());
+                return;
+            }
+
+            File.WriteAllLines(optionsPath, lines);
         }
 
         private void openFolderButton_Click(object sender, EventArgs e)
@@ -240,17 +307,13 @@ namespace LegacyConsoleLauncher
 
             AddAccount(username);
             File.WriteAllText(gamePathFile, exePath);
+            SaveFullscreenSetting();
 
             string args = "";
 
             if (!string.IsNullOrWhiteSpace(username))
             {
                 args += "-name \"" + username + "\" ";
-            }
-
-            if (fullscreenCheckBox.Checked)
-            {
-                args += "-fullscreen";
             }
 
             gameProcess = Process.Start(new ProcessStartInfo
