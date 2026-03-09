@@ -37,17 +37,24 @@
             this.resetLink = new System.Windows.Forms.LinkLabel();
             this.playtimeLabel = new System.Windows.Forms.Label();
             this.checkforLink = new System.Windows.Forms.LinkLabel();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.skinPreviewPictureBox = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.skinPreviewPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // launchButton
             // 
+            this.launchButton.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.launchButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.launchButton.Location = new System.Drawing.Point(246, 224);
             this.launchButton.Name = "launchButton";
-            this.launchButton.Size = new System.Drawing.Size(111, 32);
+            this.launchButton.Size = new System.Drawing.Size(111, 31);
             this.launchButton.TabIndex = 1;
             this.launchButton.Text = "Launch Game";
-            this.launchButton.UseVisualStyleBackColor = true;
+            this.launchButton.UseVisualStyleBackColor = false;
             this.launchButton.Click += new System.EventHandler(this.launchButton_Click);
             // 
             // fullscreenCheckBox
@@ -93,9 +100,9 @@
             // 
             // setFolderButton
             // 
-            this.setFolderButton.Location = new System.Drawing.Point(129, 224);
+            this.setFolderButton.Location = new System.Drawing.Point(96, 198);
             this.setFolderButton.Name = "setFolderButton";
-            this.setFolderButton.Size = new System.Drawing.Size(111, 32);
+            this.setFolderButton.Size = new System.Drawing.Size(95, 21);
             this.setFolderButton.TabIndex = 6;
             this.setFolderButton.Text = "Set Game Folder";
             this.setFolderButton.UseVisualStyleBackColor = true;
@@ -120,9 +127,9 @@
             // 
             // openFolderButton
             // 
-            this.openFolderButton.Location = new System.Drawing.Point(12, 224);
+            this.openFolderButton.Location = new System.Drawing.Point(12, 198);
             this.openFolderButton.Name = "openFolderButton";
-            this.openFolderButton.Size = new System.Drawing.Size(111, 32);
+            this.openFolderButton.Size = new System.Drawing.Size(78, 21);
             this.openFolderButton.TabIndex = 9;
             this.openFolderButton.Text = "Open Folder";
             this.openFolderButton.UseVisualStyleBackColor = true;
@@ -159,11 +166,52 @@
             this.checkforLink.Text = "Check for updates";
             this.checkforLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.checkforLink_LinkClicked);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(129, 224);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(111, 32);
+            this.button1.TabIndex = 13;
+            this.button1.Text = "Choose Skin";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(12, 224);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(111, 32);
+            this.button2.TabIndex = 14;
+            this.button2.Text = "Settings (WIP)";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(262, 198);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(95, 20);
+            this.button3.TabIndex = 15;
+            this.button3.Text = "Servers (WIP)";
+            this.button3.UseVisualStyleBackColor = true;
+            // 
+            // skinPreviewPictureBox
+            // 
+            this.skinPreviewPictureBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.skinPreviewPictureBox.Location = new System.Drawing.Point(381, 12);
+            this.skinPreviewPictureBox.Name = "skinPreviewPictureBox";
+            this.skinPreviewPictureBox.Size = new System.Drawing.Size(138, 281);
+            this.skinPreviewPictureBox.TabIndex = 16;
+            this.skinPreviewPictureBox.TabStop = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(364, 302);
+            this.ClientSize = new System.Drawing.Size(531, 302);
+            this.Controls.Add(this.skinPreviewPictureBox);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.checkforLink);
             this.Controls.Add(this.resetLink);
             this.Controls.Add(this.openFolderButton);
@@ -183,6 +231,7 @@
             this.Text = "LegacyConsoleLauncher";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.skinPreviewPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -201,5 +250,9 @@
         private System.Windows.Forms.LinkLabel resetLink;
         private System.Windows.Forms.Label playtimeLabel;
         private System.Windows.Forms.LinkLabel checkforLink;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.PictureBox skinPreviewPictureBox;
     }
 }

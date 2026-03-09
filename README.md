@@ -116,5 +116,49 @@ Stores the location of `Minecraft.Client.exe`.
 
 ## License
 
+## Updates
+
+This file summarizes the update-related changes added to the project (see `Form1.Updates.cs`).
+
+What was added
+
+- Automatic nightly-check helpers
+  - `GetNightlyCommitAsync()` downloads the release page and extracts the commit hash.
+  - `GetInstalledCommit()` / `SaveInstalledCommit()` read/write the installed commit from the release info file.
+
+- Download helpers with custom User-Agent and progress
+  - `DownloadStringWithUserAgentAsync(string url)` uses `WebClient` and sets a `User-Agent` header.
+  - `DownloadFileWithProgressAsync(string url, string outputPath, string statusText)` shows a progress UI while downloading and reports percentage updates.
+
+- Install and update flows
+  - `InstallGameAsync()` downloads the nightly ZIP, extracts it to a temporary folder, moves it into the install folder, detects the game executable and saves the installed commit.
+  - `UpdateGameExeAsync()` downloads the updated game executable, replaces the existing exe and saves the installed commit.
+
+- UI integration
+  - `ShowProgressForm()` / `CloseProgressForm()` manage a `Form2` progress dialog (`progressForm`).
+  - `CheckForUpdatesOnStartupAsync()` checks for the latest nightly commit on startup and prompts the user to install/update (also toggles `checkforLink` visibility).
+  - `checkforLink_LinkClicked` is a manual trigger bound to a `LinkLabel` that installs/updates when clicked.
+
+Error handling and cleanup
+
+- Both install and update flows perform cleanup of temporary files/directories and close the progress UI on exceptions. Exceptions are re-thrown to let calling UI show user-facing messages.
+
+Notes for maintainers
+
+- The update code expects several fields to be present elsewhere in `Form1` (declared in other partial files):
+  - `nightlyReleaseUrl`, `nightlyZipUrl`, `nightlyExeUrl`
+  - `releaseInfoFile`, `gameInstallDir`, `exePath`
+  - `progressForm` (type `Form2`) and `checkforLink` (type `LinkLabel`)
+
+- The project targets .NET Framework 4.7.2 and uses C# 7.3 language features.
+
+How to test
+
+1. Build the project in Visual Studio (target .NET Framework 4.7.2).
+2. Run the launcher and confirm the startup update check logic runs (or trigger the `checkforLink` link).
+3. Observe the progress dialog while downloads happen and verify that the game installs/updates and `releaseInfoFile` is written.
+
+If you want, I can expand this README with examples of the `releaseInfoFile` format, how to configure nightly URLs, or include screenshots of the progress dialog.
+
 MIT License  
 © 2026 GatoWare
