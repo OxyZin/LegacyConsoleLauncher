@@ -6,159 +6,282 @@
 
 A lightweight launcher for the **Minecraft Legacy Console PC Port**.
 
-It provides a simple way to launch the game, manage accounts and track playtime without needing to use the command line.
+It provides a simple way to launch the game, manage accounts, track playtime, and install/update the game without using the command line.
 
 <p align="center">
-<img width="366" height="334" alt="image" src="https://github.com/user-attachments/assets/97cd7261-6e35-43c1-9d97-a4ba2a0fc026" />
+<img width="533" height="334" alt="Launcher Screenshot" src="https://github.com/user-attachments/assets/f2a679c8-6c99-4614-b548-f70c01a1e5b7" />
 </p>
 
 ---
 
-## Download
+# Table of Contents
+
+- [Download](#download)
+- [Why this launcher?](#why-this-launcher)
+- [Features](#features)
+- [Installation](#installation)
+- [How to Use](#how-to-use)
+- [Automatic Updates](#automatic-updates)
+- [Data Storage](#data-storage)
+- [Requirements](#requirements)
+- [For Developers](#for-developers)
+- [Troubleshooting](#troubleshooting)
+- [License](#license)
+
+---
+
+# Download
 
 Download the latest version from the **Releases** page:
 
 https://github.com/OxyZin/LegacyConsoleLauncher/releases
 
 ---
-## Why this launcher?
+
+# Why this launcher?
 
 Many launchers for the Legacy Console PC Port are built with heavy frameworks.  
-This project focuses on **simplicity, speed and compatibility**.
+This project focuses on **simplicity, speed, and compatibility**.
 
 ### Lightweight
+
 Built with **WinForms and C#**, the launcher starts instantly and uses very little memory compared to Electron-based launchers.
 
 ### Compatible
+
 Runs on **Windows 7 and newer**, making it usable on older systems and lightweight setups.
 
 ### Simple and practical
-No unnecessary features or complicated setup.  
-Just open the launcher, select your account and play.
+
+No unnecessary features or complicated setup.
+
+Just open the launcher, select your account, and play.
 
 ### Built for the community
-Designed specifically for the **Minecraft Legacy Console PC Port**, with features that are useful for players and developers:
 
-- Account management
-- Playtime tracking
-- Automatic game detection
-- Simple configuration
+Designed specifically for the **Minecraft Legacy Console PC Port**, with features useful for both players and developers.
 
-## Features
+---
+
+# Features
 
 - Multiple account support
 - Playtime tracking per account
 - Launch the game with a custom username
 - Fullscreen toggle
-- Automatically remembers saved accounts
-- Auto-detects the game executable
+- Automatic game detection
 - Manual game folder selection
 - Drag & drop support for:
   - `Minecraft.Client.exe`
   - the folder containing it
+- Automatically remembers saved accounts
 - Opens the game folder directly from the launcher
-- Saves launcher settings automatically
-- Lightweight WinForms application
+- Automatic settings saving
+- Built-in installer and updater
+- Lightweight **WinForms** application
 
 ---
 
-## How to Use
+# Installation
+
+1. Download the latest release.
+2. Extract the ZIP file.
+3. Run:
+
+```
+LegacyConsoleLauncher.exe
+```
+
+No additional setup is required.
+
+---
+
+# How to Use
 
 1. Run `LegacyConsoleLauncher.exe`
 2. Select or enter a **username**
 3. (Optional) enable **Fullscreen**
-4. Click **Set Game Folder** and select the folder containing:
+4. Click **Set Game Folder**
+5. Select the folder containing:
 
-
+```
 Minecraft.Client.exe
+```
 
+6. Click **Launch Game**
 
-5. Click **Launch Game**
-
-You can also **drag and drop** either the game folder or `Minecraft.Client.exe` directly onto the launcher.
+You can also **drag & drop** either the game folder or `Minecraft.Client.exe` directly onto the launcher window.
 
 ---
 
-## Data Storage
+# Automatic Updates
 
-The launcher automatically creates the following files:
+The launcher includes a **built-in installer and update system** for the nightly builds of the Minecraft Legacy Console PC Port.
 
+### What it does
 
+- Checks for updates automatically on startup
+- Detects if the installed build is outdated
+- Allows manual updates via the UI
+- Downloads new builds directly from the repository
+- Shows a progress dialog during downloads
+
+### Update system features
+
+- Commit hash detection from nightly builds
+- Automatic installation for first-time users
+- Executable replacement for updates
+- Temporary file cleanup after installation
+- Progress reporting with percentage updates
+
+### Internal helper methods
+
+The update system is implemented in `Form1.Updates.cs`.
+
+Main methods include:
+
+```
+GetNightlyCommitAsync()
+GetInstalledCommit()
+SaveInstalledCommit()
+DownloadStringWithUserAgentAsync()
+DownloadFileWithProgressAsync()
+InstallGameAsync()
+UpdateGameExeAsync()
+CheckForUpdatesOnStartupAsync()
+```
+
+### UI Integration
+
+The update system integrates with the launcher UI:
+
+- `ShowProgressForm()` / `CloseProgressForm()`  
+  Controls the progress dialog (`Form2`)
+
+- `checkforLink_LinkClicked`  
+  Manual update trigger
+
+---
+
+# Data Storage
+
+The launcher stores configuration and account data locally.
+
+Generated files:
+
+```
 accounts.txt
 gamepath.txt
-
+releaseInfo.txt
+```
 
 ### accounts.txt
-Stores usernames and their playtime:
 
+Stores usernames and playtime in seconds.
 
+Format:
+
+```
 username|playtime_in_seconds
-
+```
 
 Example:
 
-
+```
 Steve|7200
 Alex|3500
-
+```
 
 ### gamepath.txt
-Stores the location of `Minecraft.Client.exe`.
+
+Stores the location of:
+
+```
+Minecraft.Client.exe
+```
+
+### releaseInfo.txt
+
+Stores the installed nightly commit hash used by the update system.
+
+Example:
+
+```
+commit=8f3d2c1
+```
 
 ---
 
-## Requirements
+# Requirements
 
 - Windows 7 or newer
+- .NET Framework 4.7.2
 - Minecraft Legacy Console PC Port
 
 ---
 
-## License
+# For Developers
 
-## Updates
+The project is built using:
 
-This file summarizes the update-related changes added to the project (see `Form1.Updates.cs`).
+- **C#**
+- **WinForms**
+- **.NET Framework 4.7.2**
+- **C# 7.3**
 
-What was added
+### Build Instructions
 
-- Automatic nightly-check helpers
-  - `GetNightlyCommitAsync()` downloads the release page and extracts the commit hash.
-  - `GetInstalledCommit()` / `SaveInstalledCommit()` read/write the installed commit from the release info file.
+1. Open the solution in **Visual Studio**
+2. Ensure the target framework is:
 
-- Download helpers with custom User-Agent and progress
-  - `DownloadStringWithUserAgentAsync(string url)` uses `WebClient` and sets a `User-Agent` header.
-  - `DownloadFileWithProgressAsync(string url, string outputPath, string statusText)` shows a progress UI while downloading and reports percentage updates.
+```
+.NET Framework 4.7.2
+```
 
-- Install and update flows
-  - `InstallGameAsync()` downloads the nightly ZIP, extracts it to a temporary folder, moves it into the install folder, detects the game executable and saves the installed commit.
-  - `UpdateGameExeAsync()` downloads the updated game executable, replaces the existing exe and saves the installed commit.
+3. Build the project.
 
-- UI integration
-  - `ShowProgressForm()` / `CloseProgressForm()` manage a `Form2` progress dialog (`progressForm`).
-  - `CheckForUpdatesOnStartupAsync()` checks for the latest nightly commit on startup and prompts the user to install/update (also toggles `checkforLink` visibility).
-  - `checkforLink_LinkClicked` is a manual trigger bound to a `LinkLabel` that installs/updates when clicked.
+### Expected fields in `Form1`
 
-Error handling and cleanup
+The update system expects the following fields declared in other partial classes:
 
-- Both install and update flows perform cleanup of temporary files/directories and close the progress UI on exceptions. Exceptions are re-thrown to let calling UI show user-facing messages.
+```
+nightlyReleaseUrl
+nightlyZipUrl
+nightlyExeUrl
+releaseInfoFile
+gameInstallDir
+exePath
+progressForm
+checkforLink
+```
 
-Notes for maintainers
+---
 
-- The update code expects several fields to be present elsewhere in `Form1` (declared in other partial files):
-  - `nightlyReleaseUrl`, `nightlyZipUrl`, `nightlyExeUrl`
-  - `releaseInfoFile`, `gameInstallDir`, `exePath`
-  - `progressForm` (type `Form2`) and `checkforLink` (type `LinkLabel`)
+# Troubleshooting
 
-- The project targets .NET Framework 4.7.2 and uses C# 7.3 language features.
+### Launcher cannot find the game
 
-How to test
+Use **Set Game Folder** and select the folder containing:
 
-1. Build the project in Visual Studio (target .NET Framework 4.7.2).
-2. Run the launcher and confirm the startup update check logic runs (or trigger the `checkforLink` link).
-3. Observe the progress dialog while downloads happen and verify that the game installs/updates and `releaseInfoFile` is written.
+```
+Minecraft.Client.exe
+```
 
-If you want, I can expand this README with examples of the `releaseInfoFile` format, how to configure nightly URLs, or include screenshots of the progress dialog.
+### Update fails
 
-MIT License  
-© 2026 GatoWare
+- Check your internet connection
+- Ensure GitHub is accessible
+- Try restarting the launcher
+
+### Antivirus warnings
+
+Some antivirus software may flag unsigned executables.  
+This launcher is **open source**, and the code can be reviewed.
+
+---
+
+# License
+
+MIT License
+
+© 2026 **GatoWare**
