@@ -36,6 +36,7 @@
             this.openFolderButton = new System.Windows.Forms.Button();
             this.resetLink = new System.Windows.Forms.LinkLabel();
             this.playtimeLabel = new System.Windows.Forms.Label();
+            this.checkforLink = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -147,11 +148,23 @@
             this.playtimeLabel.TabIndex = 11;
             this.playtimeLabel.Text = "Playtime: 0h 0m";
             // 
+            // checkforLink
+            // 
+            this.checkforLink.AutoSize = true;
+            this.checkforLink.Location = new System.Drawing.Point(143, 280);
+            this.checkforLink.Name = "checkforLink";
+            this.checkforLink.Size = new System.Drawing.Size(94, 13);
+            this.checkforLink.TabIndex = 12;
+            this.checkforLink.TabStop = true;
+            this.checkforLink.Text = "Check for updates";
+            this.checkforLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.checkforLink_LinkClicked);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(364, 302);
+            this.Controls.Add(this.checkforLink);
             this.Controls.Add(this.resetLink);
             this.Controls.Add(this.openFolderButton);
             this.Controls.Add(this.gamePathTextBox);
@@ -187,5 +200,6 @@
         private System.Windows.Forms.Button openFolderButton;
         private System.Windows.Forms.LinkLabel resetLink;
         private System.Windows.Forms.Label playtimeLabel;
+        private System.Windows.Forms.LinkLabel checkforLink;
     }
 }
