@@ -34,7 +34,6 @@
             this.gamePathLabel = new System.Windows.Forms.Label();
             this.gamePathTextBox = new System.Windows.Forms.TextBox();
             this.openFolderButton = new System.Windows.Forms.Button();
-            this.resetLink = new System.Windows.Forms.LinkLabel();
             this.playtimeLabel = new System.Windows.Forms.Label();
             this.checkforLink = new System.Windows.Forms.LinkLabel();
             this.button1 = new System.Windows.Forms.Button();
@@ -135,17 +134,6 @@
             this.openFolderButton.UseVisualStyleBackColor = true;
             this.openFolderButton.Click += new System.EventHandler(this.openFolderButton_Click);
             // 
-            // resetLink
-            // 
-            this.resetLink.AutoSize = true;
-            this.resetLink.Location = new System.Drawing.Point(13, 280);
-            this.resetLink.Name = "resetLink";
-            this.resetLink.Size = new System.Drawing.Size(124, 13);
-            this.resetLink.TabIndex = 10;
-            this.resetLink.TabStop = true;
-            this.resetLink.Text = "Reset Launcher Settings";
-            this.resetLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.resetLink_LinkClicked);
-            // 
             // playtimeLabel
             // 
             this.playtimeLabel.AutoSize = true;
@@ -158,12 +146,12 @@
             // checkforLink
             // 
             this.checkforLink.AutoSize = true;
-            this.checkforLink.Location = new System.Drawing.Point(143, 280);
+            this.checkforLink.Location = new System.Drawing.Point(9, 280);
             this.checkforLink.Name = "checkforLink";
-            this.checkforLink.Size = new System.Drawing.Size(94, 13);
+            this.checkforLink.Size = new System.Drawing.Size(75, 13);
             this.checkforLink.TabIndex = 12;
             this.checkforLink.TabStop = true;
-            this.checkforLink.Text = "Check for updates";
+            this.checkforLink.Text = "Install updates";
             this.checkforLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.checkforLink_LinkClicked);
             // 
             // button1
@@ -182,8 +170,9 @@
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(111, 32);
             this.button2.TabIndex = 14;
-            this.button2.Text = "Settings (WIP)";
+            this.button2.Text = "Settings";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button3
             // 
@@ -213,7 +202,6 @@
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.checkforLink);
-            this.Controls.Add(this.resetLink);
             this.Controls.Add(this.openFolderButton);
             this.Controls.Add(this.gamePathTextBox);
             this.Controls.Add(this.gamePathLabel);
@@ -247,7 +235,6 @@
         private System.Windows.Forms.Label gamePathLabel;
         private System.Windows.Forms.TextBox gamePathTextBox;
         private System.Windows.Forms.Button openFolderButton;
-        private System.Windows.Forms.LinkLabel resetLink;
         private System.Windows.Forms.Label playtimeLabel;
         private System.Windows.Forms.LinkLabel checkforLink;
         private System.Windows.Forms.Button button1;

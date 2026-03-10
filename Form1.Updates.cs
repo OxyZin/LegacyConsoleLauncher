@@ -81,12 +81,12 @@ namespace LegacyConsoleLauncher
 
         private string GetInstalledCommit()
         {
-            if (!File.Exists(releaseInfoFile))
+            if (!File.Exists(LauncherPaths.ReleaseInfoFile))
             {
                 return string.Empty;
             }
 
-            foreach (string line in File.ReadAllLines(releaseInfoFile))
+            foreach (string line in File.ReadAllLines(LauncherPaths.ReleaseInfoFile))
             {
                 if (line.StartsWith("commit="))
                 {
@@ -104,13 +104,14 @@ namespace LegacyConsoleLauncher
                 return;
             }
 
-            File.WriteAllText(releaseInfoFile, "commit=" + commit);
+            Directory.CreateDirectory(LauncherPaths.GameDir);
+            File.WriteAllText(LauncherPaths.ReleaseInfoFile, "commit=" + commit);
         }
 
         private async Task InstallGameAsync()
         {
-            string zipPath = Path.Combine(Application.StartupPath, "LCEWindows64.zip");
-            string tempExtractDir = Path.Combine(Application.StartupPath, "Game_Temp");
+            string zipPath = Path.Combine(LauncherPaths.DataDir, "LCEWindows64.zip");
+            string tempExtractDir = Path.Combine(LauncherPaths.DataDir, "Game_Temp");
 
             try
             {
@@ -135,6 +136,7 @@ namespace LegacyConsoleLauncher
                     Directory.Delete(gameInstallDir, true);
                 }
 
+                Directory.CreateDirectory(Path.GetDirectoryName(gameInstallDir));
                 Directory.Move(tempExtractDir, gameInstallDir);
 
                 string detectedExe = FindGameExe(gameInstallDir);
@@ -183,7 +185,7 @@ namespace LegacyConsoleLauncher
                 throw new FileNotFoundException("Game executable was not found.");
             }
 
-            string tempExePath = Path.Combine(Application.StartupPath, "Minecraft.Client.new.exe");
+            string tempExePath = Path.Combine(LauncherPaths.DataDir, "Minecraft.Client.new.exe");
 
             try
             {

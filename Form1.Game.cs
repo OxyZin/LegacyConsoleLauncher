@@ -31,10 +31,10 @@ namespace LegacyConsoleLauncher
 
             string[] possiblePaths =
             {
-                Path.Combine(Application.StartupPath, "Minecraft.Client.exe"),
-                Path.Combine(Application.StartupPath, "build", "Minecraft.Client.exe"),
-                Path.Combine(Application.StartupPath, "bin", "Minecraft.Client.exe"),
-                Path.Combine(Application.StartupPath, "game", "Minecraft.Client.exe"),
+                Path.Combine(LauncherPaths.DataDir, "Minecraft.Client.exe"),
+                Path.Combine(LauncherPaths.DataDir, "build", "Minecraft.Client.exe"),
+                Path.Combine(LauncherPaths.DataDir, "bin", "Minecraft.Client.exe"),
+                Path.Combine(LauncherPaths.DataDir, "game", "Minecraft.Client.exe"),
                 Path.Combine(gameInstallDir, "Minecraft.Client.exe")
             };
 
@@ -228,6 +228,10 @@ namespace LegacyConsoleLauncher
             {
                 args += "-name \"" + username + "\" ";
             }
+            if (!string.IsNullOrWhiteSpace(SettingsManager.AdditionalLaunchArgs))
+            {
+                args += SettingsManager.AdditionalLaunchArgs.Trim() + " ";
+            }
 
             gameProcess = Process.Start(new ProcessStartInfo
             {
@@ -251,7 +255,6 @@ namespace LegacyConsoleLauncher
             sessionStart = DateTime.Now;
             gameProcess.EnableRaisingEvents = true;
             gameProcess.Exited += GameProcess_Exited;
-
             Hide();
         }
 

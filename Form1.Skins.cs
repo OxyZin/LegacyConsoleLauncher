@@ -10,7 +10,7 @@ namespace LegacyConsoleLauncher
     {
         private string GetSkinFolder()
         {
-            return skinsDir;
+            return LauncherPaths.SkinsDir;
         }
 
         private string GetAccountSkinPath(string username)

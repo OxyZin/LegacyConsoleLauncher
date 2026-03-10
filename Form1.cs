@@ -10,13 +10,13 @@ namespace LegacyConsoleLauncher
 {
     public partial class Form1 : Form
     {
-        private readonly string accountsFile = Path.Combine(Application.StartupPath, "accounts.txt");
-        private readonly string gamePathFile = Path.Combine(Application.StartupPath, "gamepath.txt");
-        private readonly string releaseInfoFile = Path.Combine(Application.StartupPath, "releaseinfo.txt");
-        private readonly string gameInstallDir = Path.Combine(Application.StartupPath, "Game");
-        private readonly string skinsDir = Path.Combine(Application.StartupPath, "skins");
+        private readonly string accountsFile = LauncherPaths.AccountsFile;
+        private readonly string gamePathFile = LauncherPaths.GamePathFile;
+        private readonly string releaseInfoFile = LauncherPaths.ReleaseInfoFile;
+        private readonly string gameInstallDir = LauncherPaths.GameDir;
+        private readonly string skinsDir = LauncherPaths.SkinsDir;
 
-        private string exePath = Path.Combine(Application.StartupPath, "Minecraft.Client.exe");
+        private string exePath = Path.Combine(LauncherPaths.GameDir, "Minecraft.Client.exe");
 
         private readonly string nightlyReleaseUrl = "https://github.com/smartcmd/MinecraftConsoles/releases/tag/nightly";
         private readonly string nightlyZipUrl = "https://github.com/smartcmd/MinecraftConsoles/releases/download/nightly/LCEWindows64.zip";
@@ -47,7 +47,9 @@ namespace LegacyConsoleLauncher
             AcceptButton = launchButton;
             checkforLink.Visible = false;
 
-            Directory.CreateDirectory(skinsDir);
+            Directory.CreateDirectory(LauncherPaths.DataDir);
+            Directory.CreateDirectory(LauncherPaths.GameDir);
+            Directory.CreateDirectory(LauncherPaths.SkinsDir);
 
             LoadAccounts();
             LoadSavedGamePath();
@@ -61,7 +63,12 @@ namespace LegacyConsoleLauncher
             DragEnter += Form1_DragEnter;
             DragDrop += Form1_DragDrop;
 
-            await CheckForUpdatesOnStartupAsync();
+            SettingsManager.Load();
+
+            if (SettingsManager.CheckGameUpdatesOnStartup)
+            {
+                await CheckForUpdatesOnStartupAsync();
+            }
         }
     }
 }

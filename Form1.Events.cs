@@ -100,20 +100,8 @@ namespace LegacyConsoleLauncher
             );
         }
 
-        private void resetLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        public void ResetLauncherData()
         {
-            DialogResult result = MessageBox.Show(
-                "This will reset the saved accounts and game path. Continue?",
-                "Reset Launcher Settings",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question
-            );
-
-            if (result != DialogResult.Yes)
-            {
-                return;
-            }
-
             if (File.Exists(accountsFile))
             {
                 File.Delete(accountsFile);
@@ -129,23 +117,23 @@ namespace LegacyConsoleLauncher
                 File.Delete(releaseInfoFile);
             }
 
+            if (Directory.Exists(skinsDir))
+            {
+                Directory.Delete(skinsDir, true);
+                Directory.CreateDirectory(skinsDir);
+            }
+
             usernameComboBox.Items.Clear();
             usernameComboBox.Text = string.Empty;
             playtimeData.Clear();
 
-            exePath = Path.Combine(Application.StartupPath, "Minecraft.Client.exe");
+            exePath = Path.Combine(gameInstallDir, "Minecraft.Client.exe");
             fullscreenCheckBox.Checked = false;
 
             AutoDetectGame();
             UpdateGamePathDisplay();
             UpdatePlaytimeLabel();
-
-            MessageBox.Show(
-                "Launcher settings have been reset.",
-                "Done",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information
-            );
+            UpdateSkinPreview();
         }
 
         private void usernameComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -169,5 +157,13 @@ namespace LegacyConsoleLauncher
         private void gamePathLabel_Click(object sender, EventArgs e)
         {
         }
+        private void button2_Click(object sender, EventArgs e)
+        {
+            using (Form3 settingsForm = new Form3())
+            {
+                settingsForm.Owner = this;
+                settingsForm.ShowDialog();
+            }
+        }
     }
-}
+    }

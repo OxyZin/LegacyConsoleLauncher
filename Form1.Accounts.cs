@@ -12,12 +12,12 @@ namespace LegacyConsoleLauncher
             usernameComboBox.Items.Clear();
             playtimeData.Clear();
 
-            if (!File.Exists(accountsFile))
+            if (!File.Exists(LauncherPaths.AccountsFile))
             {
                 return;
             }
 
-            string[] lines = File.ReadAllLines(accountsFile);
+            string[] lines = File.ReadAllLines(LauncherPaths.AccountsFile);
 
             foreach (string line in lines)
             {
@@ -63,7 +63,8 @@ namespace LegacyConsoleLauncher
                 lines.Add(entry.Key + "|" + entry.Value);
             }
 
-            File.WriteAllLines(accountsFile, lines);
+            Directory.CreateDirectory(LauncherPaths.DataDir);
+            File.WriteAllLines(LauncherPaths.AccountsFile, lines);
         }
 
         private void AddAccount(string username)
