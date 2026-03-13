@@ -158,7 +158,5 @@ How to test
 2. Run the launcher and confirm the startup update check logic runs (or trigger the `checkforLink` link).
 3. Observe the progress dialog while downloads happen and verify that the game installs/updates and `releaseInfoFile` is written.
 
-If you want, I can expand this README with examples of the `releaseInfoFile` format, how to configure nightly URLs, or include screenshots of the progress dialog.
-
 MIT License  
 © 2026 GatoWare
