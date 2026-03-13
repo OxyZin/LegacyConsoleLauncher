@@ -48,7 +48,7 @@ namespace LegacyConsoleLauncher
                 }
             }
         }
-
+        
         private void UpdateGamePathDisplay()
         {
             if (File.Exists(exePath))

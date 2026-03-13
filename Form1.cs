@@ -58,6 +58,8 @@ namespace LegacyConsoleLauncher
             LoadFullscreenSetting();
             UpdatePlaytimeLabel();
             InitializeSkinPreview();
+            CommitsFetcher commits = new CommitsFetcher(newsFlow);
+            await commits.LoadCommits();
 
             AllowDrop = true;
             DragEnter += Form1_DragEnter;
@@ -69,6 +71,15 @@ namespace LegacyConsoleLauncher
             {
                 await CheckForUpdatesOnStartupAsync();
             }
+        }
+        private void panel2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void webBrowser1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        {
+
         }
     }
 }
