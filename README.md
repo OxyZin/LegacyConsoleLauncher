@@ -1,8 +1,9 @@
 # Legacy Console Launcher
 
-![Windows](https://img.shields.io/badge/Windows-7%2B-0078D6?style=flat-square&logo=windows&logoColor=white)
-![C#](https://img.shields.io/badge/C%23-.NET-512BD4?style=flat-square&logo=csharp&logoColor=white)
-![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
+![Windows](https://img.shields.io/badge/Windows-7%2B-0078D6?style=for-the-badge&logo=windows)
+![C#](https://img.shields.io/badge/C%23-.NET-512BD4?style=for-the-badge&logo=csharp)
+![Downloads](https://img.shields.io/github/downloads/oxyzin/LegacyConsoleLauncher/total?style=for-the-badge)
+![License](https://img.shields.io/github/license/oxyzin/LegacyConsoleLauncher?style=for-the-badge)
 
 A lightweight launcher for the **Minecraft Legacy Console PC Port**.
 
