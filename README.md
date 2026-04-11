@@ -1,5 +1,8 @@
 # Legacy Console Launcher
 
+This launcher is archived.
+Please consider checking out [Emerald Launcher](https://github.com/LCE-Hub/LCE-Emerald-Launcher).
+
 ![Windows](https://img.shields.io/badge/Windows-7%2B-0078D6?style=for-the-badge&logo=windows)
 ![C#](https://img.shields.io/badge/C%23-.NET-512BD4?style=for-the-badge&logo=csharp)
 ![Downloads](https://img.shields.io/github/downloads/oxyzin/LegacyConsoleLauncher/total?style=for-the-badge)
